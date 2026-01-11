@@ -8,29 +8,27 @@ export function About() {
       <div className="space-y-4">
         <p className="leading-relaxed text-muted-foreground">
           I'm a <span className="text-foreground font-medium">Microsoft Certified Azure Developer</span> with{" "}
-          <span className="text-foreground font-medium">5 years of experience</span> in .NET application development and
-          production support. My passion lies in building enterprise-grade applications that are both performant and
-          maintainable.
+          <span className="text-foreground font-medium">5 years of experience</span> designing and developing
+          enterprise-grade web applications using .NET Core, Blazor, Angular, and Azure cloud services.
         </p>
 
         <p className="leading-relaxed text-muted-foreground">
-          My expertise spans across <span className="text-foreground font-medium">batch job scheduling</span>,{" "}
-          <span className="text-foreground font-medium">SSIS package development</span>, and{" "}
-          <span className="text-foreground font-medium">SQL Server optimization</span>. I thrive in production
-          environments where ensuring application uptime and stability is paramount.
+          My expertise spans across <span className="text-foreground font-medium">microservices architecture</span>,{" "}
+          <span className="text-foreground font-medium">RESTful APIs</span>, and{" "}
+          <span className="text-foreground font-medium">database optimization</span>. I'm skilled in delivering scalable
+          solutions with a strong focus on performance, security, and clean code practices.
         </p>
 
         <p className="leading-relaxed text-muted-foreground">
-          I have a proven track record in <span className="text-foreground font-medium">root cause analysis</span>,{" "}
-          <span className="text-foreground font-medium">incident resolution</span>, and cross-team collaboration.
-          Whether it's monitoring systems with Splunk or developing complex T-SQL queries, I bring a methodical approach
-          to every challenge.
+          I hold multiple <span className="text-foreground font-medium">Microsoft Azure certifications</span> including
+          AZ-400 (DevOps Engineer Expert), AZ-204 (Developer Associate), and AZ-900 (Fundamentals), demonstrating my
+          commitment to staying current with cloud technologies.
         </p>
 
         <p className="leading-relaxed text-muted-foreground">
-          When I'm not debugging production issues or optimizing database queries, I'm continuously expanding my
-          knowledge in cloud technologies and exploring new ways to leverage Azure services for modern application
-          development.
+          Whether it's building interactive frontends with Angular and Blazor, developing robust backend services, or
+          optimizing database queries, I bring a methodical approach to every challenge and continuously expand my
+          knowledge in modern application development.
         </p>
       </div>
     </section>

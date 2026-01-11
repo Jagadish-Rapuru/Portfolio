@@ -48,10 +48,6 @@ export function Contact() {
           Say Hello
         </Link>
       </div>
-
-      <footer className="mt-12 text-center">
-        <p className="text-xs text-muted-foreground">Built with Next.js & Tailwind CSS</p>
-      </footer>
     </section>
   )
 }
