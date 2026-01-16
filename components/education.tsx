@@ -1,75 +1,109 @@
 import Link from "next/link"
-import { ExternalLink, GraduationCap, Award } from "lucide-react"
+import { GraduationCap, ExternalLink, BookOpen, Calendar } from "lucide-react"
 
-const certifications = [
-  {
-    name: "Azure DevOps Engineer Expert (AZ-400)",
-    issuer: "Microsoft",
-    url: "https://learn.microsoft.com/api/credentials/share/en-us/RapuruJagadish-8656/CE3EAA3E7AC2F14A?sharingId=2A18191ADB106515",
-  },
-  {
-    name: "Azure Developer Associate (AZ-204)",
-    issuer: "Microsoft",
-    url: "https://learn.microsoft.com/api/credentials/share/en-us/RapuruJagadish-8656/F8DACB914B8428C4?sharingId=2A18191ADB106515",
-  },
-  {
-    name: "Azure Fundamentals (AZ-900)",
-    issuer: "Microsoft",
-    url: "https://learn.microsoft.com/api/credentials/share/en-us/RapuruJagadish-8656/E25E81A9C954AA5?sharingId=2A18191ADB106515",
-  },
+const coursework = [
+  "Advanced Database Systems",
+  "Data Mining & Machine Learning",
+  "Digital Forensics",
+  "Operating Systems",
+  "Image Processing",
 ]
 
 export function Education() {
   return (
-    <section id="education" className="mb-16 scroll-mt-16 lg:mb-24 lg:scroll-mt-24">
-      <div className="sticky top-0 z-20 -mx-6 mb-4 bg-background/75 px-6 py-5 backdrop-blur lg:hidden">
-        <h2 className="text-sm font-bold uppercase tracking-widest text-foreground">Education</h2>
-      </div>
-
-      <div className="space-y-8">
-        {/* Degree */}
-        <div className="group relative rounded-lg border border-border bg-card p-6 transition-all hover:border-primary/50">
-          <div className="flex items-start gap-4">
-            <GraduationCap className="h-8 w-8 text-primary shrink-0 mt-1" />
-            <div>
-              <h3 className="font-semibold text-foreground">Master of Science in Computer Science and Engineering</h3>
-              <Link
-                href="https://www.unr.edu/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-1 inline-flex items-center text-sm text-muted-foreground hover:text-primary transition-colors"
-              >
-                University of Nevada, Reno
-                <ExternalLink className="ml-1 h-3 w-3" />
-              </Link>
-            </div>
-          </div>
+    <section id="education" className="py-20 px-6">
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center mb-12">
+          <span className="inline-block px-4 py-1.5 rounded-full glass text-[#00D4FF] text-sm font-medium mb-4">
+            Academic Background
+          </span>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            <span className="gradient-text">Education</span>
+          </h2>
+          <p className="text-[#8892b0] max-w-2xl mx-auto">
+            Building a strong foundation in computer science and engineering
+          </p>
         </div>
 
-        {/* Certifications */}
-        <div>
-          <h3 className="mb-4 flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-foreground">
-            <Award className="h-4 w-4 text-primary" />
-            Certifications
-          </h3>
-          <div className="space-y-3">
-            {certifications.map((cert, index) => (
-              <Link
-                key={index}
-                href={cert.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group/cert flex items-center justify-between rounded-lg border border-border bg-card p-4 transition-all hover:border-primary/50 hover:bg-card/80"
-              >
-                <div>
-                  <p className="font-medium text-foreground group-hover/cert:text-primary transition-colors">
-                    {cert.name}
-                  </p>
-                  <p className="text-sm text-muted-foreground">{cert.issuer}</p>
+        <div className="space-y-6">
+          {/* Masters */}
+          <div className="glass rounded-2xl p-8 card-hover relative overflow-hidden">
+            {/* Accent */}
+            <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-[#0066FF] to-[#00D4FF]" />
+
+            <div className="flex flex-col md:flex-row md:items-start gap-6">
+              <div className="p-4 rounded-xl bg-[#0066FF]/10 shrink-0">
+                <GraduationCap className="h-10 w-10 text-[#00D4FF]" />
+              </div>
+              <div className="flex-1">
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-2">
+                  <h3 className="font-bold text-white text-xl">Master of Science - Computer Science</h3>
+                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#0066FF]/10 text-[#00D4FF] text-sm font-medium w-fit">
+                    <Calendar className="h-4 w-4" />
+                    Aug 2023 - May 2025
+                  </div>
                 </div>
-                <ExternalLink className="h-4 w-4 text-muted-foreground group-hover/cert:text-primary transition-colors" />
-              </Link>
-            ))}
+
+                <Link
+                  href="https://www.unr.edu/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-white hover:text-[#00D4FF] transition-colors font-medium"
+                >
+                  University of Nevada, Reno
+                  <ExternalLink className="h-4 w-4" />
+                </Link>
+
+                <p className="text-sm text-[#8892b0] mt-1">GPA: 3.8/4.0</p>
+
+                <p className="mt-4 text-[#8892b0]">
+                  Focusing on advanced topics in software engineering, machine learning, data mining, and cloud
+                  computing. Currently working as a Graduate Assistant developing the GBCESU Research Portal.
+                </p>
+
+                <div className="mt-4">
+                  <p className="text-sm text-[#8892b0] mb-3">Relevant Coursework:</p>
+                  <div className="flex flex-wrap gap-2">
+                    {coursework.map((course) => (
+                      <span
+                        key={course}
+                        className="px-3 py-1 rounded-full bg-white/5 text-sm text-[#8892b0] border border-white/5"
+                      >
+                        {course}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Bachelors */}
+          <div className="glass rounded-2xl p-8 card-hover relative overflow-hidden">
+            {/* Accent */}
+            <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-[#00D4FF] to-[#0066FF]" />
+
+            <div className="flex flex-col md:flex-row md:items-start gap-6">
+              <div className="p-4 rounded-xl bg-[#00D4FF]/10 shrink-0">
+                <BookOpen className="h-10 w-10 text-[#0066FF]" />
+              </div>
+              <div className="flex-1">
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-2">
+                  <h3 className="font-bold text-white text-xl">Bachelor of Technology - Computer Science</h3>
+                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#00D4FF]/10 text-[#0066FF] text-sm font-medium w-fit">
+                    <Calendar className="h-4 w-4" />
+                    Graduated 2019
+                  </div>
+                </div>
+
+                <p className="text-white font-medium">India</p>
+
+                <p className="mt-4 text-[#8892b0]">
+                  Completed undergraduate studies with focus on computer science fundamentals, programming, data
+                  structures, algorithms, and software development principles.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

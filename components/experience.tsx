@@ -1,11 +1,13 @@
+"use client"
+
 import Link from "next/link"
-import { ExternalLink } from "lucide-react"
+import { ExternalLink, MapPin, Calendar, Building2, Briefcase } from "lucide-react"
 
 const experiences = [
   {
-    period: "June 2024 — Dec 2025",
-    title: ".NET Developer – Graduate Assistant",
-    company: "University of Nevada Reno",
+    period: "June 2024 — December 2025",
+    title: ".NET Developer",
+    company: "University of Nevada, Reno",
     location: "Reno, NV, USA",
     url: "https://www.unr.edu/",
     description: [
@@ -28,6 +30,7 @@ const experiences = [
       "Developed RESTful Web APIs using .NET Core microservices architecture, enabling scalable and maintainable backend services",
       "Collaborated on frontend development using Angular for building interactive forms and UI components",
       "Built .NET Console Applications to automate data migration by converting Excel data to SQL insert scripts, streamlining ETL processes",
+      "Monitored application logs using Splunk and resolved performance bottlenecks",
       "Authored PostgreSQL PL/pgSQL functions for advanced multi-filtering and search capabilities, enhancing data retrieval efficiency",
       "Resolved critical production and UAT defects through systematic debugging, reducing bug count and improving application stability",
     ],
@@ -53,54 +56,104 @@ const experiences = [
 
 export function Experience() {
   return (
-    <section id="experience" className="mb-16 scroll-mt-16 lg:mb-24 lg:scroll-mt-24">
-      <div className="sticky top-0 z-20 -mx-6 mb-4 bg-background/75 px-6 py-5 backdrop-blur lg:hidden">
-        <h2 className="text-sm font-bold uppercase tracking-widest text-foreground">Experience</h2>
-      </div>
+    <section id="experience" className="py-20 px-6">
+      <div className="max-w-5xl mx-auto">
+        <div className="text-center mb-16">
+          <span className="inline-block px-4 py-1.5 rounded-full glass text-[#00D4FF] text-sm font-medium mb-4">
+            Career Journey
+          </span>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            Work <span className="gradient-text">Experience</span>
+          </h2>
+          <p className="text-[#8892b0] max-w-2xl mx-auto">
+            Building enterprise solutions across industries - from research portals to power grid monitoring
+          </p>
+        </div>
 
-      <div className="space-y-12">
-        {experiences.map((exp, index) => (
-          <div key={index} className="group relative grid pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4">
-            <header className="z-10 mb-2 mt-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground sm:col-span-2">
-              {exp.period}
-            </header>
-            <div className="z-10 sm:col-span-6">
-              <h3 className="font-medium leading-snug">
-                <Link
-                  href={exp.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group/link inline-flex items-baseline text-foreground hover:text-primary focus-visible:text-primary"
+        {/* Timeline */}
+        <div className="relative">
+          {/* Timeline line */}
+          <div className="absolute left-4 md:left-1/2 transform md:-translate-x-px top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#0066FF] via-[#00D4FF] to-[#0066FF]" />
+
+          {experiences.map((exp, index) => (
+            <div
+              key={index}
+              className={`relative flex flex-col md:flex-row gap-8 mb-16 ${
+                index % 2 === 0 ? "md:flex-row-reverse" : ""
+              }`}
+            >
+              {/* Timeline dot */}
+              <div className="absolute left-4 md:left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-gradient-to-r from-[#0066FF] to-[#00D4FF] border-4 border-[#0a0a0f] z-10" />
+
+              {/* Content */}
+              <div className={`md:w-1/2 ${index % 2 === 0 ? "md:pr-16" : "md:pl-16"} pl-12 md:pl-0`}>
+                <div
+                  className={`glass rounded-2xl p-6 card-hover relative overflow-hidden ${index % 2 === 0 ? "md:text-right" : ""}`}
                 >
-                  <span>
-                    {exp.title} ·{" "}
-                    <span className="inline-block">
-                      {exp.company}
-                      <ExternalLink className="ml-1 inline-block h-4 w-4 shrink-0 translate-y-px transition-transform group-hover/link:-translate-y-1 group-hover/link:translate-x-1" />
-                    </span>
-                  </span>
-                </Link>
-              </h3>
-              <p className="mt-1 text-sm text-muted-foreground">{exp.location}</p>
-              <ul className="mt-2 space-y-1.5">
-                {exp.description.map((item, i) => (
-                  <li key={i} className="text-sm leading-relaxed text-muted-foreground">
-                    • {item}
-                  </li>
-                ))}
-              </ul>
-              <ul className="mt-4 flex flex-wrap gap-2">
-                {exp.technologies.map((tech) => (
-                  <li key={tech}>
-                    <span className="flex items-center rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-                      {tech}
-                    </span>
-                  </li>
-                ))}
-              </ul>
+                  {/* Accent line */}
+                  <div
+                    className={`absolute top-0 ${index % 2 === 0 ? "right-0" : "left-0"} w-1 h-full bg-gradient-to-b from-[#0066FF] to-[#00D4FF]`}
+                  />
+
+                  <div
+                    className={`flex items-center gap-2 text-sm text-[#00D4FF] font-medium mb-3 ${index % 2 === 0 ? "md:justify-end" : ""}`}
+                  >
+                    <Calendar className="h-4 w-4" />
+                    {exp.period}
+                  </div>
+
+                  <div
+                    className={`flex items-center gap-2 mb-2 ${index % 2 === 0 ? "md:justify-end md:flex-row-reverse" : ""}`}
+                  >
+                    <Briefcase className="h-5 w-5 text-[#0066FF]" />
+                    <h3 className="font-bold text-white text-xl">{exp.title}</h3>
+                  </div>
+
+                  <Link
+                    href={exp.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`inline-flex items-center gap-1.5 text-white hover:text-[#00D4FF] transition-colors font-medium ${index % 2 === 0 ? "md:flex-row-reverse" : ""}`}
+                  >
+                    <Building2 className="h-4 w-4" />
+                    {exp.company}
+                    <ExternalLink className="h-3 w-3" />
+                  </Link>
+
+                  <div
+                    className={`flex items-center gap-1.5 text-sm text-[#8892b0] mt-2 ${index % 2 === 0 ? "md:justify-end" : ""}`}
+                  >
+                    <MapPin className="h-3 w-3" />
+                    {exp.location}
+                  </div>
+
+                  <ul className={`mt-4 space-y-2 ${index % 2 === 0 ? "md:text-right" : ""}`}>
+                    {exp.description.map((item, i) => (
+                      <li key={i} className="text-sm text-[#8892b0] flex items-start gap-2">
+                        <span className="text-[#00D4FF] mt-1.5 flex-shrink-0">{index % 2 === 0 ? "" : ""}</span>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div className={`flex flex-wrap gap-2 mt-5 ${index % 2 === 0 ? "md:justify-end" : ""}`}>
+                    {exp.technologies.map((tech) => (
+                      <span
+                        key={tech}
+                        className="px-3 py-1 rounded-full bg-[#0066FF]/10 text-xs font-medium text-[#00D4FF] border border-[#0066FF]/20"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Spacer for alternating layout */}
+              <div className="hidden md:block md:w-1/2" />
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   )
