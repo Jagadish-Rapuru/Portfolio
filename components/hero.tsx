@@ -119,14 +119,14 @@ export function Hero() {
 
             {/* CTA Buttons */}
             <div className="flex flex-wrap gap-4 mb-8">
-              <Link
+              <a
                 href="/Jagadish_Rapuru_Resume.pdf"
-                target="_blank"
+                download="Jagadish_Rapuru_Resume.pdf"
                 className="group flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-[#0066FF] to-[#00D4FF] text-white font-medium hover:shadow-lg hover:shadow-[#0066FF]/30 hover:scale-105 hover:-translate-y-0.5 active:scale-95 transition-all duration-300"
               >
                 <Download className="h-5 w-5 group-hover:animate-bounce" />
                 Download Resume
-              </Link>
+              </a>
               <Link
                 href="https://www.linkedin.com/in/jagadish-rapuru-a13a34214/"
                 target="_blank"
