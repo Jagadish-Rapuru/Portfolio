@@ -1,21 +1,96 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { Github, Linkedin, Mail, Download, ExternalLink } from "lucide-react"
 
 const roles = [".NET Full Stack Developer", "Azure Certified Cloud Engineer", "MS Computer Science @ UNR"]
 
+const skillCategories = [
+  {
+    name: "BACKEND",
+    skills: [
+      { name: "C#", glow: "purple" },
+      { name: ".NET 8", glow: "purple" },
+      { name: "ASP.NET Core", glow: "purple" },
+      { name: "Blazor", glow: "purple" },
+      { name: "Web API", glow: "purple" },
+      { name: "Entity Framework", glow: "purple" },
+      { name: "SignalR", glow: "purple" },
+    ],
+  },
+  {
+    name: "FRONTEND",
+    skills: [
+      { name: "Angular", glow: "red" },
+      { name: "React", glow: "cyan" },
+      { name: "TypeScript", glow: "blue" },
+      { name: "JavaScript", glow: "yellow" },
+      { name: "HTML5", glow: "orange" },
+      { name: "CSS3", glow: "blue" },
+      { name: "Tailwind", glow: "cyan" },
+    ],
+  },
+  {
+    name: "CLOUD & DEVOPS",
+    skills: [
+      { name: "Azure", glow: "blue", badge: "3x Certified" },
+      { name: "Azure DevOps", glow: "blue" },
+      { name: "Docker", glow: "blue" },
+      { name: "CI/CD", glow: "green" },
+      { name: "Microservices", glow: "cyan" },
+      { name: "Git", glow: "orange" },
+    ],
+  },
+  {
+    name: "DATABASES",
+    skills: [
+      { name: "SQL Server", glow: "red" },
+      { name: "PostgreSQL", glow: "blue" },
+      { name: "MongoDB", glow: "green" },
+      { name: "Redis", glow: "red" },
+      { name: "T-SQL", glow: "yellow" },
+    ],
+  },
+  {
+    name: "DATA & ML",
+    skills: [
+      { name: "Python", glow: "yellow" },
+      { name: "TensorFlow", glow: "orange" },
+      { name: "Machine Learning", glow: "pink" },
+      { name: "Data Mining", glow: "purple" },
+      { name: "OpenCV", glow: "green" },
+      { name: "Pandas", glow: "blue" },
+    ],
+  },
+  {
+    name: "PRACTICES",
+    skills: [
+      { name: "Agile", glow: "blue" },
+      { name: "Scrum", glow: "green" },
+      { name: "SOLID", glow: "purple" },
+      { name: "Design Patterns", glow: "cyan" },
+      { name: "Linux", glow: "yellow" },
+      { name: "REST API", glow: "green" },
+    ],
+  },
+]
+
+const floatingSkills = [
+  { name: "C#", angle: 0, color: "text-purple-400" },
+  { name: ".NET", angle: 60, color: "text-blue-400" },
+  { name: "Azure", angle: 120, color: "text-[#00BCF2]" },
+  { name: "SQL", angle: 180, color: "text-orange-400" },
+  { name: "Angular", angle: 240, color: "text-red-400" },
+  { name: "API", angle: 300, color: "text-green-400" },
+]
+
 export function Hero() {
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0)
   const [displayText, setDisplayText] = useState("")
   const [isDeleting, setIsDeleting] = useState(false)
-  const [counts, setCounts] = useState({ years: 0, certs: 0, projects: 0 })
-  const statsRef = useRef<HTMLDivElement>(null)
-  const [hasAnimated, setHasAnimated] = useState(false)
 
-  // Typing animation
   useEffect(() => {
     const currentRole = roles[currentRoleIndex]
     const timeout = setTimeout(
@@ -40,85 +115,96 @@ export function Hero() {
     return () => clearTimeout(timeout)
   }, [displayText, isDeleting, currentRoleIndex])
 
-  // Counter animation
-  useEffect(() => {
-    if (!hasAnimated) {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          if (entries[0].isIntersecting) {
-            setHasAnimated(true)
-            animateCounters()
-          }
-        },
-        { threshold: 0.5 },
-      )
-
-      if (statsRef.current) {
-        observer.observe(statsRef.current)
-      }
-
-      return () => observer.disconnect()
-    }
-  }, [hasAnimated])
-
-  const animateCounters = () => {
-    const duration = 2000
-    const steps = 60
-    const interval = duration / steps
-
-    let step = 0
-    const timer = setInterval(() => {
-      step++
-      const progress = step / steps
-      setCounts({
-        years: Math.round(5 * progress),
-        certs: Math.round(3 * progress),
-        projects: Math.round(10 * progress),
-      })
-      if (step >= steps) clearInterval(timer)
-    }, interval)
-  }
-
   return (
-    <section className="min-h-screen flex items-center px-6 pt-24 pb-12">
-      <div className="max-w-7xl mx-auto w-full">
-        <div className="grid lg:grid-cols-[1.2fr_1fr] gap-12 lg:gap-20 items-center">
-          {/* Left Side - Content */}
-          <div className="order-2 lg:order-1">
-            {/* Open to Work Badge */}
+    <section id="home" className="min-h-screen flex items-center justify-center px-6 pt-20 relative overflow-hidden">
+      {/* Background Effects */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-20 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-blob" />
+        <div
+          className="absolute bottom-20 right-20 w-80 h-80 bg-blue-500/20 rounded-full blur-3xl animate-blob"
+          style={{ animationDelay: "2s" }}
+        />
+        <div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-cyan-500/15 rounded-full blur-3xl animate-blob"
+          style={{ animationDelay: "4s" }}
+        />
+      </div>
+
+      <div className="max-w-6xl mx-auto w-full relative z-10">
+        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+          {/* Left side - Profile Image with orbiting skills */}
+          <div className="relative flex-shrink-0">
+            <div
+              className="absolute inset-0 w-[calc(100%+6rem)] h-[calc(100%+6rem)] -left-12 -top-12 animate-spin-slow"
+              style={{ animationDuration: "30s" }}
+            >
+              {floatingSkills.map((skill, index) => {
+                const radius = 180
+                const angleRad = (skill.angle * Math.PI) / 180
+                const x = Math.cos(angleRad) * radius
+                const y = Math.sin(angleRad) * radius
+
+                return (
+                  <div
+                    key={skill.name}
+                    className={`absolute left-1/2 top-1/2 ${skill.color} text-sm font-bold hover:scale-125 transition-transform duration-300 cursor-default z-10`}
+                    style={{
+                      transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`,
+                    }}
+                  >
+                    <span
+                      className="inline-block animate-spin-slow"
+                      style={{ animationDirection: "reverse", animationDuration: "30s" }}
+                    >
+                      {skill.name}
+                    </span>
+                  </div>
+                )
+              })}
+            </div>
+
+            {/* Rotating orbit ring */}
+            <div
+              className="absolute inset-0 w-[calc(100%+6rem)] h-[calc(100%+6rem)] -left-12 -top-12 rounded-full border-2 border-dashed border-[#0066FF]/30 animate-spin-slow"
+              style={{ animationDuration: "40s" }}
+            />
+
+            {/* Multiple glow layers */}
+            <div className="absolute inset-0 w-full h-full rounded-full bg-gradient-to-r from-[#0066FF] to-[#00D4FF] blur-2xl opacity-30" />
+            <div className="absolute inset-2 w-[calc(100%-1rem)] h-[calc(100%-1rem)] rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 blur-xl opacity-20" />
+
+            {/* Profile Image */}
+            <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-[#0066FF]/50 shadow-2xl shadow-[#0066FF]/30">
+              <Image src="/images/profile.jpeg" alt="Jagadish Rapuru" fill className="object-cover" priority />
+            </div>
+          </div>
+
+          {/* Right side - Content */}
+          <div className="text-center lg:text-left flex-1">
+            {/* Available Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-6 pulse-glow">
-              <span className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
-              <span className="text-sm font-medium text-green-400">Open to Work</span>
+              <span className="h-2.5 w-2.5 rounded-full bg-green-500 animate-pulse" />
+              <span className="text-sm font-semibold text-green-400">Open to Work</span>
             </div>
 
             {/* Name */}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4 text-white">
-              JAGADISH <span className="gradient-text">RAPURU</span>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 tracking-tight">
+              <span className="gradient-text">Jagadish Rapuru</span>
             </h1>
 
             {/* Typing Animation */}
-            <div className="h-10 flex items-center mb-6">
+            <div className="h-8 mb-6">
               <span className="text-xl md:text-2xl text-[#00D4FF] font-medium typing-cursor">{displayText}</span>
             </div>
 
-            {/* Stats Row */}
-            <div ref={statsRef} className="flex flex-wrap gap-6 mb-8">
-              <div className="text-center">
-                <div className="text-3xl md:text-4xl font-bold gradient-text">{counts.years}+</div>
-                <div className="text-sm text-[#8892b0]">Years Experience</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl md:text-4xl font-bold gradient-text">{counts.certs}x</div>
-                <div className="text-sm text-[#8892b0]">Azure Certified</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl md:text-4xl font-bold gradient-text">{counts.projects}+</div>
-                <div className="text-sm text-[#8892b0]">Projects Delivered</div>
-              </div>
-            </div>
+            {/* Description */}
+            <p className="text-[#94a3b8] text-lg mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+              Building scalable enterprise solutions with expertise in microservices architecture, RESTful APIs, and
+              cloud-native applications. Passionate about clean code and performance optimization.
+            </p>
 
             {/* CTA Buttons */}
-            <div className="flex flex-wrap gap-4 mb-8">
+            <div className="flex flex-wrap justify-center lg:justify-start gap-4 mb-8">
               <a
                 href="/Jagadish_Rapuru_Resume.pdf"
                 download="Jagadish_Rapuru_Resume.pdf"
@@ -139,12 +225,12 @@ export function Hero() {
             </div>
 
             {/* Social Icons */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center justify-center lg:justify-start gap-4">
               <Link
                 href="https://github.com/Jagadish-Rapuru"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 rounded-full glass text-[#8892b0] hover:text-[#00D4FF] hover:border-[#00D4FF]/50 hover:scale-110 hover:-translate-y-0.5 active:scale-95 transition-all duration-300"
+                className="p-3 rounded-full glass text-[#94a3b8] hover:text-[#00D4FF] hover:border-[#00D4FF]/50 hover:scale-110 hover:-translate-y-0.5 active:scale-95 transition-all duration-300"
                 aria-label="GitHub"
               >
                 <Github className="h-5 w-5" />
@@ -153,57 +239,18 @@ export function Hero() {
                 href="https://www.linkedin.com/in/jagadish-rapuru-a13a34214/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 rounded-full glass text-[#8892b0] hover:text-[#00D4FF] hover:border-[#00D4FF]/50 hover:scale-110 hover:-translate-y-0.5 active:scale-95 transition-all duration-300"
+                className="p-3 rounded-full glass text-[#94a3b8] hover:text-[#00D4FF] hover:border-[#00D4FF]/50 hover:scale-110 hover:-translate-y-0.5 active:scale-95 transition-all duration-300"
                 aria-label="LinkedIn"
               >
                 <Linkedin className="h-5 w-5" />
               </Link>
               <Link
                 href="mailto:jagadishrapuru@gmail.com"
-                className="p-3 rounded-full glass text-[#8892b0] hover:text-[#00D4FF] hover:border-[#00D4FF]/50 hover:scale-110 hover:-translate-y-0.5 active:scale-95 transition-all duration-300"
+                className="p-3 rounded-full glass text-[#94a3b8] hover:text-[#00D4FF] hover:border-[#00D4FF]/50 hover:scale-110 hover:-translate-y-0.5 active:scale-95 transition-all duration-300"
                 aria-label="Email"
               >
                 <Mail className="h-5 w-5" />
               </Link>
-            </div>
-          </div>
-
-          {/* Right Side - Profile with Floating Icons */}
-          <div className="order-1 lg:order-2 flex justify-center">
-            <div className="relative">
-              {/* Gradient ring */}
-              <div className="absolute -inset-4 rounded-full bg-gradient-to-r from-[#0066FF] to-[#00D4FF] blur-xl opacity-30 animate-pulse" />
-
-              {/* Profile Image */}
-              <div className="relative">
-                <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-[#0066FF] to-[#00D4FF] opacity-75" />
-                <div className="relative h-64 w-64 md:h-80 md:w-80 overflow-hidden rounded-full border-4 border-[#0a0a0f]">
-                  <Image src="/images/profile.jpeg" alt="Jagadish Rapuru" fill className="object-cover" priority />
-                </div>
-              </div>
-
-              {/* Floating Tech Icons */}
-              <div className="absolute -top-4 -right-4 p-3 glass rounded-xl animate-float">
-                <span className="text-2xl font-bold text-[#0066FF]">C#</span>
-              </div>
-              <div
-                className="absolute top-1/4 -left-8 p-3 glass rounded-xl animate-float"
-                style={{ animationDelay: "1s" }}
-              >
-                <span className="text-xl font-bold text-[#00D4FF]">.NET</span>
-              </div>
-              <div
-                className="absolute bottom-1/4 -right-6 p-3 glass rounded-xl animate-float"
-                style={{ animationDelay: "2s" }}
-              >
-                <span className="text-xl font-bold text-[#0066FF]">Azure</span>
-              </div>
-              <div
-                className="absolute -bottom-2 left-1/4 p-3 glass rounded-xl animate-float"
-                style={{ animationDelay: "1.5s" }}
-              >
-                <span className="text-xl font-bold text-[#00D4FF]">SQL</span>
-              </div>
             </div>
           </div>
         </div>

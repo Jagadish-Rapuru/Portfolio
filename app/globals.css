@@ -4,20 +4,20 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: #0a0a0f;
+  --background: #030712;
   --foreground: #ffffff;
-  --card: rgba(255, 255, 255, 0.03);
+  --card: rgba(255, 255, 255, 0.02);
   --card-foreground: #ffffff;
-  --popover: #12121a;
+  --popover: #0f172a;
   --popover-foreground: #ffffff;
   --primary: #0066ff;
   --primary-foreground: #ffffff;
   --secondary: #00d4ff;
-  --secondary-foreground: #0a0a0f;
+  --secondary-foreground: #030712;
   --muted: #1a1a24;
-  --muted-foreground: #8892b0;
+  --muted-foreground: #94a3b8;
   --accent: #00d4ff;
-  --accent-foreground: #0a0a0f;
+  --accent-foreground: #030712;
   --destructive: #ff4444;
   --destructive-foreground: #ffffff;
   --border: rgba(0, 102, 255, 0.2);
@@ -26,8 +26,8 @@
   --radius: 0.75rem;
 
   /* Custom colors */
-  --text-secondary: #8892b0;
-  --text-muted: #495670;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
   --border-glow: rgba(0, 102, 255, 0.3);
   --gradient-start: #0066ff;
   --gradient-end: #00d4ff;
@@ -83,8 +83,8 @@
 }
 
 @theme inline {
-  --font-sans: "Satoshi", "DM Sans", "DM Sans Fallback", sans-serif;
-  --font-heading: "Clash Display", "Sora", "Sora Fallback", sans-serif;
+  --font-sans: "Inter", "DM Sans", "DM Sans Fallback", sans-serif;
+  --font-heading: "Inter", "Sora", "Sora Fallback", sans-serif;
   --font-mono: "JetBrains Mono", "Geist Mono", "Geist Mono Fallback";
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -150,13 +150,20 @@ html {
 }
 
 .glass-strong {
-  background: rgba(18, 18, 26, 0.8);
+  background: rgba(15, 23, 42, 0.8);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Gradient text */
 .gradient-text {
+  background: linear-gradient(135deg, #3b82f6, #a855f7, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-blue {
   background: linear-gradient(135deg, #0066ff, #00d4ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -229,29 +236,14 @@ html {
   animation: float 4s ease-in-out infinite;
 }
 
-@keyframes float-delayed {
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-12px);
-  }
-}
-
-.animate-float-delayed {
-  animation: float-delayed 5s ease-in-out infinite;
-  animation-delay: 1s;
-}
-
-/* Pulse animation for "Open to Work" badge */
+/* Pulse animation for "Available for Hire" badge */
 @keyframes pulse-glow {
   0%,
   100% {
     box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4);
   }
   50% {
-    box-shadow: 0 0 0 8px rgba(34, 197, 94, 0);
+    box-shadow: 0 0 0 10px rgba(34, 197, 94, 0);
   }
 }
 
@@ -264,25 +256,66 @@ html {
   background: linear-gradient(90deg, #0066ff, #00d4ff);
 }
 
-/* Skill bar animation */
-@keyframes fill-bar {
-  from {
-    width: 0%;
+/* Skill pill animations */
+@keyframes skill-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 5px var(--glow-color, rgba(59, 130, 246, 0.3));
+  }
+  50% {
+    box-shadow: 0 0 20px var(--glow-color, rgba(59, 130, 246, 0.5));
   }
 }
 
-.skill-bar-fill {
-  animation: fill-bar 1.5s ease-out forwards;
-}
-
-/* Card hover effect */
-.card-hover {
+.skill-pill {
   transition: all 0.3s ease;
 }
 
-.card-hover:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(0, 102, 255, 0.15);
+.skill-pill:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 0 30px var(--glow-color, rgba(59, 130, 246, 0.5));
+}
+
+/* Glow color variants */
+.glow-purple {
+  --glow-color: rgba(168, 85, 247, 0.5);
+}
+.glow-blue {
+  --glow-color: rgba(59, 130, 246, 0.5);
+}
+.glow-cyan {
+  --glow-color: rgba(6, 182, 212, 0.5);
+}
+.glow-green {
+  --glow-color: rgba(34, 197, 94, 0.5);
+}
+.glow-red {
+  --glow-color: rgba(239, 68, 68, 0.5);
+}
+.glow-yellow {
+  --glow-color: rgba(234, 179, 8, 0.5);
+}
+.glow-orange {
+  --glow-color: rgba(249, 115, 22, 0.5);
+}
+.glow-pink {
+  --glow-color: rgba(236, 72, 153, 0.5);
+}
+
+/* Staggered animation for skills */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.5s ease-out forwards;
 }
 
 /* Grid pattern background */
@@ -329,72 +362,50 @@ html {
   animation: count-up 0.6s ease-out forwards;
 }
 
-/* Slide in animations */
-@keyframes slide-in-left {
+/* Added slow spin animation for profile ring effect */
+@keyframes spin-slow {
   from {
-    opacity: 0;
-    transform: translateX(-50px);
+    transform: rotate(0deg);
   }
   to {
-    opacity: 1;
-    transform: translateX(0);
+    transform: rotate(360deg);
   }
 }
 
-@keyframes slide-in-right {
-  from {
-    opacity: 0;
-    transform: translateX(50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
 }
 
-.slide-in-left {
-  animation: slide-in-left 0.6s ease-out forwards;
-}
-
-.slide-in-right {
-  animation: slide-in-right 0.6s ease-out forwards;
-}
-
-/* Fade in up */
-@keyframes fade-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.fade-in-up {
-  animation: fade-in-up 0.6s ease-out forwards;
-}
-
-/* Orbiting tech icons */
+/* New orbital rotation for skill badges */
 @keyframes orbit {
   from {
-    transform: rotate(0deg) translateX(120px) rotate(0deg);
+    transform: rotate(0deg) translateX(var(--orbit-radius)) rotate(0deg);
   }
   to {
-    transform: rotate(360deg) translateX(120px) rotate(-360deg);
+    transform: rotate(360deg) translateX(var(--orbit-radius)) rotate(-360deg);
   }
 }
 
-.orbit-icon {
-  animation: orbit 20s linear infinite;
+.animate-orbit {
+  animation: orbit var(--orbit-duration, 20s) linear infinite;
 }
 
-/* Responsive font scaling */
-.text-responsive-xl {
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
+/* Card hover effect */
+.card-hover {
+  transition: all 0.3s ease;
 }
 
-.text-responsive-lg {
-  font-size: clamp(1.5rem, 3vw, 2.5rem);
+.card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 102, 255, 0.15);
+}
+
+/* Skill category label */
+.category-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #64748b;
+  min-width: 100px;
 }
