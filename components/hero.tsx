@@ -1,80 +1,14 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { Github, Linkedin, Mail, Download, ExternalLink } from "lucide-react"
+import { Linkedin, Download, Calendar, Building2 } from "lucide-react"
 
-const roles = [".NET Full Stack Developer", "Azure Certified Cloud Engineer", "MS Computer Science @ UNR"]
-
-const skillCategories = [
-  {
-    name: "BACKEND",
-    skills: [
-      { name: "C#", glow: "purple" },
-      { name: ".NET 8", glow: "purple" },
-      { name: "ASP.NET Core", glow: "purple" },
-      { name: "Blazor", glow: "purple" },
-      { name: "Web API", glow: "purple" },
-      { name: "Entity Framework", glow: "purple" },
-      { name: "SignalR", glow: "purple" },
-    ],
-  },
-  {
-    name: "FRONTEND",
-    skills: [
-      { name: "Angular", glow: "red" },
-      { name: "React", glow: "cyan" },
-      { name: "TypeScript", glow: "blue" },
-      { name: "JavaScript", glow: "yellow" },
-      { name: "HTML5", glow: "orange" },
-      { name: "CSS3", glow: "blue" },
-      { name: "Tailwind", glow: "cyan" },
-    ],
-  },
-  {
-    name: "CLOUD & DEVOPS",
-    skills: [
-      { name: "Azure", glow: "blue", badge: "3x Certified" },
-      { name: "Azure DevOps", glow: "blue" },
-      { name: "Docker", glow: "blue" },
-      { name: "CI/CD", glow: "green" },
-      { name: "Microservices", glow: "cyan" },
-      { name: "Git", glow: "orange" },
-    ],
-  },
-  {
-    name: "DATABASES",
-    skills: [
-      { name: "SQL Server", glow: "red" },
-      { name: "PostgreSQL", glow: "blue" },
-      { name: "MongoDB", glow: "green" },
-      { name: "Redis", glow: "red" },
-      { name: "T-SQL", glow: "yellow" },
-    ],
-  },
-  {
-    name: "DATA & ML",
-    skills: [
-      { name: "Python", glow: "yellow" },
-      { name: "TensorFlow", glow: "orange" },
-      { name: "Machine Learning", glow: "pink" },
-      { name: "Data Mining", glow: "purple" },
-      { name: "OpenCV", glow: "green" },
-      { name: "Pandas", glow: "blue" },
-    ],
-  },
-  {
-    name: "PRACTICES",
-    skills: [
-      { name: "Agile", glow: "blue" },
-      { name: "Scrum", glow: "green" },
-      { name: "SOLID", glow: "purple" },
-      { name: "Design Patterns", glow: "cyan" },
-      { name: "Linux", glow: "yellow" },
-      { name: "REST API", glow: "green" },
-    ],
-  },
+const roles = [
+  "Building Scalable Enterprise Applications",
+  "3x Microsoft Azure Certified Professional",
+  "Microservices & Cloud Architecture",
 ]
 
 const floatingSkills = [
@@ -85,6 +19,65 @@ const floatingSkills = [
   { name: "Angular", angle: 240, color: "text-red-400" },
   { name: "API", angle: 300, color: "text-green-400" },
 ]
+
+const stats = [
+  { value: 5, suffix: "+", label: "Years Exp" },
+  { value: 3, suffix: "", label: "Azure Certs" },
+  { value: 500, suffix: "K+", label: "Daily API Calls" },
+  { value: 99.9, suffix: "%", label: "Uptime" },
+]
+
+const companies = [
+  { name: "Wipro", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" },
+  { name: "HCL Technologies", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" },
+  {
+    name: "University of Nevada, Reno",
+    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg",
+  },
+]
+
+function AnimatedCounter({ value, suffix }: { value: number; suffix: string }) {
+  const [count, setCount] = useState(0)
+  const countRef = useRef<HTMLSpanElement>(null)
+  const [hasAnimated, setHasAnimated] = useState(false)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !hasAnimated) {
+          setHasAnimated(true)
+          const duration = 2000
+          const steps = 60
+          const increment = value / steps
+          let current = 0
+          const timer = setInterval(() => {
+            current += increment
+            if (current >= value) {
+              setCount(value)
+              clearInterval(timer)
+            } else {
+              setCount(Math.floor(current * 10) / 10)
+            }
+          }, duration / steps)
+        }
+      },
+      { threshold: 0.5 },
+    )
+
+    if (countRef.current) {
+      observer.observe(countRef.current)
+    }
+
+    return () => observer.disconnect()
+  }, [value, hasAnimated])
+
+  return (
+    <span ref={countRef} className="text-3xl md:text-4xl font-bold gradient-text-blue">
+      {count}
+      {suffix}
+    </span>
+  )
+}
 
 export function Hero() {
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0)
@@ -138,7 +131,7 @@ export function Hero() {
               className="absolute inset-0 w-[calc(100%+6rem)] h-[calc(100%+6rem)] -left-12 -top-12 animate-spin-slow"
               style={{ animationDuration: "30s" }}
             >
-              {floatingSkills.map((skill, index) => {
+              {floatingSkills.map((skill) => {
                 const radius = 180
                 const angleRad = (skill.angle * Math.PI) / 180
                 const x = Math.cos(angleRad) * radius
@@ -182,29 +175,44 @@ export function Hero() {
           {/* Right side - Content */}
           <div className="text-center lg:text-left flex-1">
             {/* Available Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-6 pulse-glow">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/10 border border-green-500/30 mb-6 pulse-glow">
               <span className="h-2.5 w-2.5 rounded-full bg-green-500 animate-pulse" />
-              <span className="text-sm font-semibold text-green-400">Open to Work</span>
+              <span className="text-sm font-semibold text-green-400">Open to Work - Available Immediately</span>
             </div>
 
             {/* Name */}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 tracking-tight">
-              <span className="gradient-text">Jagadish Rapuru</span>
+            <p className="text-lg text-[#8892b0] mb-2">Hi, I'm</p>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-2 tracking-tight">
+              <span className="text-white">Jagadish Rapuru</span>
             </h1>
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 gradient-text-blue">
+              .NET Full Stack Developer
+            </h2>
 
             {/* Typing Animation */}
             <div className="h-8 mb-6">
-              <span className="text-xl md:text-2xl text-[#00D4FF] font-medium typing-cursor">{displayText}</span>
+              <span className="text-lg md:text-xl text-[#00D4FF] font-medium typing-cursor">{displayText}</span>
             </div>
 
-            {/* Description */}
+            {/* Value Proposition */}
             <p className="text-[#94a3b8] text-lg mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-              Building scalable enterprise solutions with expertise in microservices architecture, RESTful APIs, and
-              cloud-native applications. Passionate about clean code and performance optimization.
+              I architect high-performance .NET solutions that handle{" "}
+              <span className="text-[#00D4FF] font-semibold">500K+ daily requests</span> with{" "}
+              <span className="text-[#00D4FF] font-semibold">99.9% uptime</span> for Fortune 500 companies.
             </p>
 
+            {/* Stats Bar */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 p-4 glass rounded-2xl">
+              {stats.map((stat, index) => (
+                <div key={index} className="text-center group hover:scale-105 transition-transform">
+                  <AnimatedCounter value={stat.value} suffix={stat.suffix} />
+                  <p className="text-xs text-[#8892b0] mt-1">{stat.label}</p>
+                </div>
+              ))}
+            </div>
+
             {/* CTA Buttons */}
-            <div className="flex flex-wrap justify-center lg:justify-start gap-4 mb-8">
+            <div className="flex flex-wrap justify-center lg:justify-start gap-4 mb-6">
               <a
                 href="/Jagadish_Rapuru_Resume.pdf"
                 download="Jagadish_Rapuru_Resume.pdf"
@@ -214,43 +222,41 @@ export function Hero() {
                 Download Resume
               </a>
               <Link
+                href="https://calendly.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-6 py-3 rounded-full glass border border-[#0066FF]/30 text-white font-medium hover:bg-white/10 hover:scale-105 hover:-translate-y-0.5 active:scale-95 transition-all duration-300"
+              >
+                <Calendar className="h-5 w-5" />
+                Schedule Call
+              </Link>
+              <Link
                 href="https://www.linkedin.com/in/jagadish-rapuru-a13a34214/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-6 py-3 rounded-full glass text-white font-medium hover:bg-white/10 hover:scale-105 hover:-translate-y-0.5 active:scale-95 transition-all duration-300"
+                className="flex items-center gap-2 px-6 py-3 rounded-full text-[#8892b0] hover:text-[#00D4FF] hover:scale-105 transition-all duration-300"
               >
-                <ExternalLink className="h-5 w-5" />
-                Let's Connect
+                <Linkedin className="h-5 w-5" />
+                LinkedIn
               </Link>
             </div>
 
-            {/* Social Icons */}
-            <div className="flex items-center justify-center lg:justify-start gap-4">
-              <Link
-                href="https://github.com/Jagadish-Rapuru"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 rounded-full glass text-[#94a3b8] hover:text-[#00D4FF] hover:border-[#00D4FF]/50 hover:scale-110 hover:-translate-y-0.5 active:scale-95 transition-all duration-300"
-                aria-label="GitHub"
-              >
-                <Github className="h-5 w-5" />
-              </Link>
-              <Link
-                href="https://www.linkedin.com/in/jagadish-rapuru-a13a34214/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 rounded-full glass text-[#94a3b8] hover:text-[#00D4FF] hover:border-[#00D4FF]/50 hover:scale-110 hover:-translate-y-0.5 active:scale-95 transition-all duration-300"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="h-5 w-5" />
-              </Link>
-              <Link
-                href="mailto:jagadishrapuru@gmail.com"
-                className="p-3 rounded-full glass text-[#94a3b8] hover:text-[#00D4FF] hover:border-[#00D4FF]/50 hover:scale-110 hover:-translate-y-0.5 active:scale-95 transition-all duration-300"
-                aria-label="Email"
-              >
-                <Mail className="h-5 w-5" />
-              </Link>
+            {/* Company Trust Strip */}
+            <div className="pt-6 border-t border-white/10">
+              <p className="text-xs text-[#64748b] mb-3 flex items-center gap-2 justify-center lg:justify-start">
+                <Building2 className="h-3 w-3" />
+                Previously delivered solutions for
+              </p>
+              <div className="flex items-center justify-center lg:justify-start gap-6 flex-wrap">
+                {["Wipro", "HCL Technologies", "University of Nevada, Reno"].map((company) => (
+                  <span
+                    key={company}
+                    className="text-sm text-[#64748b] hover:text-white transition-colors cursor-default grayscale hover:grayscale-0"
+                  >
+                    {company}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
         </div>

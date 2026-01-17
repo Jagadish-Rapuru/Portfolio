@@ -2,12 +2,14 @@ import { Header } from "@/components/header"
 import { Hero } from "@/components/hero"
 import { Certifications } from "@/components/certifications"
 import { Experience } from "@/components/experience"
+import { WhyHireMe } from "@/components/why-hire-me"
 import { Skills } from "@/components/skills"
 import { Projects } from "@/components/projects"
 import { Education } from "@/components/education"
 import { Contact } from "@/components/contact"
 import { ScrollProgress } from "@/components/scroll-progress"
 import { BackToTop } from "@/components/back-to-top"
+import { HireMeButton } from "@/components/hire-me-button"
 
 export default function Home() {
   return (
@@ -32,6 +34,7 @@ export default function Home() {
         <Hero />
         <Certifications />
         <Experience />
+        <WhyHireMe />
         <Skills />
         <Projects />
         <Education />
@@ -39,6 +42,7 @@ export default function Home() {
       </main>
 
       <BackToTop />
+      <HireMeButton />
     </div>
   )
 }

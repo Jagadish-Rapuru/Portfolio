@@ -1,6 +1,7 @@
 "use client"
 
-import { Server, Layout, Cloud, Database, Code, Cpu } from "lucide-react"
+import { useState, useEffect, useRef } from "react"
+import { Server, Layout, Cloud, Database, Code, Cpu, Star } from "lucide-react"
 
 const skillIcons: Record<string, string> = {
   // Backend
@@ -45,8 +46,27 @@ const skillIcons: Record<string, string> = {
   "Scikit-learn": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/scikitlearn/scikitlearn-original.svg",
 }
 
+const coreExpertiseSkills = [
+  "C# / .NET 8 / .NET Core",
+  "C#",
+  "Microsoft Azure",
+  "SQL Server/T-SQL",
+  "Angular",
+  "ASP.NET Core Web API",
+]
+
+const filters = [
+  { id: "all", label: "All" },
+  { id: "backend", label: "Backend" },
+  { id: "frontend", label: "Frontend" },
+  { id: "cloud", label: "Cloud" },
+  { id: "database", label: "Database" },
+  { id: "languages", label: "Languages" },
+]
+
 const skillCategories = [
   {
+    id: "backend",
     title: "Backend Development",
     icon: Server,
     skills: [
@@ -58,6 +78,7 @@ const skillCategories = [
     ],
   },
   {
+    id: "frontend",
     title: "Frontend Development",
     icon: Layout,
     skills: [
@@ -69,6 +90,7 @@ const skillCategories = [
     ],
   },
   {
+    id: "cloud",
     title: "Cloud & DevOps",
     icon: Cloud,
     skills: [
@@ -80,6 +102,7 @@ const skillCategories = [
     ],
   },
   {
+    id: "database",
     title: "Databases",
     icon: Database,
     skills: [
@@ -91,6 +114,7 @@ const skillCategories = [
     ],
   },
   {
+    id: "languages",
     title: "Programming Languages",
     icon: Code,
     skills: [
@@ -102,6 +126,7 @@ const skillCategories = [
     ],
   },
   {
+    id: "data",
     title: "Data & ML",
     icon: Cpu,
     skills: [
@@ -114,26 +139,82 @@ const skillCategories = [
   },
 ]
 
-export function Skills() {
+function AnimatedProgressBar({ level, isVisible }: { level: number; isVisible: boolean }) {
   return (
-    <section id="skills" className="py-20 px-4">
+    <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
+      <div
+        className="h-full bg-gradient-to-r from-[#0066FF] to-[#00D4FF] rounded-full transition-all duration-1000 ease-out"
+        style={{ width: isVisible ? `${level}%` : "0%" }}
+      />
+    </div>
+  )
+}
+
+export function Skills() {
+  const [activeFilter, setActiveFilter] = useState("all")
+  const [isVisible, setIsVisible] = useState(false)
+  const sectionRef = useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setIsVisible(true)
+        }
+      },
+      { threshold: 0.2 },
+    )
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current)
+    }
+
+    return () => observer.disconnect()
+  }, [])
+
+  const filteredCategories =
+    activeFilter === "all" ? skillCategories : skillCategories.filter((cat) => cat.id === activeFilter)
+
+  return (
+    <section id="skills" className="py-20 px-4" ref={sectionRef}>
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
-          <span className="bg-gradient-to-r from-[#0066FF] to-[#00D4FF] bg-clip-text text-transparent">
-            Technical Skills
+        <div className="text-center mb-8">
+          <span className="inline-block px-4 py-1.5 rounded-full glass text-[#00D4FF] text-sm font-medium mb-4">
+            Technical Expertise
           </span>
-        </h2>
-        <p className="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
-          A comprehensive overview of my technical expertise across various domains
-        </p>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <span className="bg-gradient-to-r from-[#0066FF] to-[#00D4FF] bg-clip-text text-transparent">
+              Skills Matrix
+            </span>
+          </h2>
+          <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
+            A comprehensive overview of my technical expertise across various domains
+          </p>
+
+          <div className="flex flex-wrap justify-center gap-2 mb-8">
+            {filters.map((filter) => (
+              <button
+                key={filter.id}
+                onClick={() => setActiveFilter(filter.id)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                  activeFilter === filter.id
+                    ? "bg-gradient-to-r from-[#0066FF] to-[#00D4FF] text-white shadow-lg shadow-[#0066FF]/25"
+                    : "glass text-[#8892b0] hover:text-white hover:bg-white/10"
+                }`}
+              >
+                {filter.label}
+              </button>
+            ))}
+          </div>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {skillCategories.map((category, index) => {
+          {filteredCategories.map((category, index) => {
             const CategoryIcon = category.icon
             return (
               <div
                 key={index}
-                className="p-6 rounded-xl bg-[#12121a]/80 border border-white/5 backdrop-blur-sm hover:border-[#0066FF]/30 transition-all duration-300"
+                className="p-6 rounded-xl bg-[#12121a]/80 border border-white/5 backdrop-blur-sm hover:border-[#0066FF]/30 transition-all duration-300 card-hover"
               >
                 <div className="flex items-center gap-3 mb-6">
                   <div className="p-2 rounded-lg bg-gradient-to-br from-[#0066FF]/20 to-[#00D4FF]/20">
@@ -143,27 +224,45 @@ export function Skills() {
                 </div>
 
                 <div className="space-y-4">
-                  {category.skills.map((skill, skillIndex) => (
-                    <div key={skillIndex}>
-                      <div className="flex justify-between items-center mb-1">
-                        <div className="flex items-center gap-2">
-                          <img
-                            src={skillIcons[skill.name] || "/placeholder.svg"}
-                            alt={skill.name}
-                            className="w-5 h-5 object-contain"
-                          />
-                          <span className="text-gray-300 text-sm">{skill.name}</span>
+                  {category.skills.map((skill, skillIndex) => {
+                    const isExpert = skill.level >= 90
+                    const isCoreExpertise = coreExpertiseSkills.includes(skill.name)
+
+                    return (
+                      <div
+                        key={skillIndex}
+                        className={`group ${isExpert ? "relative" : ""}`}
+                        style={{ animationDelay: `${skillIndex * 0.1}s` }}
+                      >
+                        {isExpert && (
+                          <div className="absolute -inset-1 bg-gradient-to-r from-yellow-500/20 to-amber-500/20 rounded-lg blur-sm opacity-0 group-hover:opacity-100 transition-opacity" />
+                        )}
+
+                        <div className={`relative ${isExpert ? "p-2 -m-2" : ""}`}>
+                          <div className="flex justify-between items-center mb-1">
+                            <div className="flex items-center gap-2">
+                              <img
+                                src={skillIcons[skill.name] || "/placeholder.svg"}
+                                alt={skill.name}
+                                className="w-5 h-5 object-contain"
+                              />
+                              <span className="text-gray-300 text-sm">{skill.name}</span>
+                              {isCoreExpertise && (
+                                <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold bg-gradient-to-r from-yellow-500/20 to-amber-500/20 text-yellow-400 border border-yellow-500/30">
+                                  <Star className="h-2.5 w-2.5 fill-current" />
+                                  CORE
+                                </span>
+                              )}
+                            </div>
+                            <span className={`text-sm font-medium ${isExpert ? "text-yellow-400" : "text-[#00D4FF]"}`}>
+                              {skill.level}%
+                            </span>
+                          </div>
+                          <AnimatedProgressBar level={skill.level} isVisible={isVisible} />
                         </div>
-                        <span className="text-[#00D4FF] text-sm font-medium">{skill.level}%</span>
                       </div>
-                      <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-gradient-to-r from-[#0066FF] to-[#00D4FF] rounded-full transition-all duration-1000"
-                          style={{ width: `${skill.level}%` }}
-                        />
-                      </div>
-                    </div>
-                  ))}
+                    )
+                  })}
                 </div>
               </div>
             )

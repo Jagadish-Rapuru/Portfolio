@@ -251,6 +251,21 @@ html {
   animation: pulse-glow 2s infinite;
 }
 
+/* Added subtle pulse animation for hire me button */
+@keyframes pulse-subtle {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 2s ease-in-out infinite;
+}
+
 /* Scroll progress */
 .scroll-progress {
   background: linear-gradient(90deg, #0066ff, #00d4ff);

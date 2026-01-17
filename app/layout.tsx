@@ -9,9 +9,9 @@ const sora = Sora({ subsets: ["latin"], variable: "--font-sora" })
 const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains" })
 
 export const metadata: Metadata = {
-  title: "Jagadish Rapuru | Senior .NET Full Stack Developer",
+  title: "Jagadish Rapuru | .NET Developer | Azure Certified | Hire Me",
   description:
-    "Microsoft Certified Azure Developer (3x) with 5+ years of experience building scalable enterprise solutions with .NET, Azure, and modern web technologies. Currently pursuing MS in Computer Science at University of Nevada, Reno.",
+    ".NET Full Stack Developer with 5+ years experience, 3 Azure certifications. Specialized in microservices, Web APIs, and enterprise applications. Available for immediate hire.",
   keywords: [
     "Jagadish Rapuru",
     ".NET Developer",
@@ -22,10 +22,12 @@ export const metadata: Metadata = {
     "Blazor",
     "Cloud Engineer",
     "Software Engineer",
+    "Hire .NET Developer",
+    "Available for hire",
   ],
   openGraph: {
-    title: "Jagadish Rapuru | Senior .NET Full Stack Developer",
-    description: "Microsoft Certified Azure Developer with 5+ years experience",
+    title: "Jagadish Rapuru | .NET Developer | Azure Certified",
+    description: "Microsoft Certified Azure Developer with 5+ years experience. Available for immediate hire.",
     type: "website",
   },
     generator: 'v0.app'
